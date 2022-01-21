@@ -53,21 +53,20 @@ func rmWordsWithNonAsciiChars(words *[]string) *[]string {
 	return &asciiWords
 }
 
-func filterWordsByLength(words *[]string, length int) *[]string {
-	uppercaseWords := []string{}
-	for _, word := range *words {
-		if len(word) != length {
-			continue
-		}
-		uppercaseWords = append(uppercaseWords, strings.ToUpper(word))
+func hasLength(word string, length int) string {
+	if len(word) == length {
+		return word
 	}
-	return &uppercaseWords
+	return ""
 }
 
 func cleanupWords(words *[]string, length int) *[]string {
 	words = applyToWordSlice(strings.ToUpper, words)
 	words = rmWordsWithNonAsciiChars(words)
-	words = filterWordsByLength(words, length)
+	hasLengthLength := func(word string) string {
+		return hasLength(word, length)
+	}
+	words = applyToWordSlice(hasLengthLength, words)
 	return words
 }
 

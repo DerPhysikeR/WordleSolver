@@ -146,3 +146,23 @@ func TestScoreAgainst(t *testing.T) {
 		expectGotString(t, "hh.", score)
 	})
 }
+
+func TestGetKeysSortedByValue(t *testing.T) {
+	t.Run("with unique values", func(t *testing.T) {
+		m := map[string]int{"abc": 1, "def": 2, "ghi": 3}
+		got := getKeysSortedByValue(&m)
+		reference := []string{"abc", "def", "ghi"}
+		compareWordSlices(t, got, &reference)
+	})
+
+	t.Run("with non-unique values", func(t *testing.T) {
+		m := map[string]int{"abc": 1, "def": 1, "ghi": 3}
+		got := getKeysSortedByValue(&m)
+		ref := []string{"abc", "def", "ghi"}
+		if ref[0] == (*got)[0] && ref[1] == (*got)[1] && ref[2] == (*got)[2] {
+		} else if ref[0] == (*got)[1] && ref[1] == (*got)[0] && ref[2] == (*got)[2] {
+		} else {
+			t.Errorf("Expected %v got %v", ref, *got)
+		}
+	})
+}

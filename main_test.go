@@ -5,19 +5,19 @@ import (
 	"testing"
 )
 
-func TestApplyToWordSlice(t *testing.T) {
-	compareWordSlices := func(t testing.TB, slice1, slice2 *[]string) {
-		t.Helper()
-		if len(*slice1) != len(*slice2) {
-			t.Errorf("Can't compare slices of different length.")
-		}
-		for idx, word := range *slice1 {
-			if word != (*slice2)[idx] {
-				t.Errorf("Given slices are not equal '%v' != '%v'", word, (*slice2)[idx])
-			}
+func compareWordSlices(t testing.TB, slice1, slice2 *[]string) {
+	t.Helper()
+	if len(*slice1) != len(*slice2) {
+		t.Errorf("Can't compare slices of different length.")
+	}
+	for idx, word := range *slice1 {
+		if word != (*slice2)[idx] {
+			t.Errorf("Given slices are not equal '%v' != '%v'", word, (*slice2)[idx])
 		}
 	}
+}
 
+func TestApplyToWordSlice(t *testing.T) {
 	t.Run("with toUpper on simple string", func(t *testing.T) {
 		words := []string{"abc", "aBc"}
 		capitalizedWords := applyToWordSlice(strings.ToUpper, &words)

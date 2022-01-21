@@ -18,17 +18,17 @@ func TestApplyToWordSlice(t *testing.T) {
 		}
 	}
 
-	t.Run("with toUpper", func(t *testing.T) {
+	t.Run("with toUpper on simple string", func(t *testing.T) {
 		words := []string{"abc", "aBc"}
 		capitalizedWords := applyToWordSlice(strings.ToUpper, &words)
 		reference := []string{"ABC", "ABC"}
 		compareWordSlices(t, capitalizedWords, &reference)
 	})
 
-	t.Run("with special characters", func(t *testing.T) {
-		words := []string{"ab'c", "aB_c"}
-		capitalizedWords := applyToWordSlice(strings.ToUpper, &words)
-		reference := []string{"AB'C", "AB_C"}
+	t.Run("with filtering function", func(t *testing.T) {
+		words := []string{"abc", "aBc"}
+		capitalizedWords := applyToWordSlice(func(word string) string { return "" }, &words)
+		reference := []string{}
 		compareWordSlices(t, capitalizedWords, &reference)
 	})
 

@@ -31,7 +31,6 @@ func TestApplyToWordSlice(t *testing.T) {
 		reference := []string{}
 		compareWordSlices(t, capitalizedWords, &reference)
 	})
-
 }
 
 func expectGotString(t testing.TB, expect, got string) {
@@ -88,7 +87,6 @@ func TestCleanupWords(t *testing.T) {
 		reference := []string{"ABC"}
 		compareWordSlices(t, cleanedWords, &reference)
 	})
-
 }
 
 func TestCreateWordGameFromWords(t *testing.T) {
@@ -99,7 +97,6 @@ func TestCreateWordGameFromWords(t *testing.T) {
 		compareWordSlices(t, wordGame.allWords, &reference)
 		compareWordSlices(t, wordGame.remainingWords, &reference)
 	})
-
 }
 
 func assertPanic(t *testing.T, f func()) {

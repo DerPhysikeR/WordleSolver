@@ -34,20 +34,23 @@ func TestApplyToWordSlice(t *testing.T) {
 
 }
 
+func expectGotString(t testing.TB, expect, got string) {
+	t.Helper()
+	if expect != got {
+		t.Errorf("Expected '%v' got '%v'", expect, got)
+	}
+}
+
 func TestHasLength(t *testing.T) {
 	t.Run("with correct length", func(t *testing.T) {
 		expect := string("abc")
 		got := hasLength(string("abc"), 3)
-		if expect != got {
-			t.Errorf("Expected '%v' got '%v'", expect, got)
-		}
+		expectGotString(t, expect, got)
 	})
 
 	t.Run("with wrong length", func(t *testing.T) {
 		expect := string("")
 		got := hasLength(string("abc"), 1)
-		if expect != got {
-			t.Errorf("Expected '%v' got '%v'", expect, got)
-		}
+		expectGotString(t, expect, got)
 	})
 }

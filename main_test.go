@@ -176,3 +176,15 @@ func TestWordGameGuess(t *testing.T) {
 		compareWordSlices(t, wordGame.remainingWords, &reference)
 	})
 }
+
+func TestWordGameGetBestGuesses(t *testing.T) {
+	t.Run("with simple word list", func(t *testing.T) {
+		words := []string{"AXY", "BXY", "CXY", "ABC", "XXX"}
+		wordGame := createWordGame(&words, 3)
+		bestGuesses := wordGame.getBestGuesses()
+		best := (*bestGuesses)[0]
+		expectGotString(t, "ABC", best)
+		worst := (*bestGuesses)[4]
+		expectGotString(t, "XXX", worst)
+	})
+}

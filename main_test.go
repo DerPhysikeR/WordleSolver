@@ -90,3 +90,14 @@ func TestCleanupWords(t *testing.T) {
 	})
 
 }
+
+func TestCreateWordGameFromWords(t *testing.T) {
+	t.Run("all kinds of words", func(t *testing.T) {
+		words := []string{"a,c", "a", "abc"}
+		wordGame := createWordGame(&words, 3)
+		reference := []string{"ABC"}
+		compareWordSlices(t, wordGame.allWords, &reference)
+		compareWordSlices(t, wordGame.remainingWords, &reference)
+	})
+
+}

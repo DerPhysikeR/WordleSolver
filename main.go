@@ -61,6 +61,10 @@ func cleanupWords(words *[]string, length int) *[]string {
 
 func createWordGameFromDictionary(path string, length int) *WordGame {
 	words := readDictionary(path)
+	return createWordGame(words, length)
+}
+
+func createWordGame(words *[]string, length int) *WordGame {
 	words = cleanupWords(words, length)
 	remainingWords := make([]string, len(*words))
 	copy(remainingWords, *words)

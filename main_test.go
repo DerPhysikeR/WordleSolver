@@ -54,3 +54,29 @@ func TestHasLength(t *testing.T) {
 		expectGotString(t, expect, got)
 	})
 }
+
+func TestHasNoSpecialCharacters(t *testing.T) {
+	t.Run("with only lowercase letters", func(t *testing.T) {
+		expect := string("abc")
+		got := hasNoSpecialCharacters(string("abc"))
+		expectGotString(t, expect, got)
+	})
+
+	t.Run("with only uppercase letters", func(t *testing.T) {
+		expect := string("ABC")
+		got := hasNoSpecialCharacters(string("ABC"))
+		expectGotString(t, expect, got)
+	})
+
+	t.Run("with some whitespace", func(t *testing.T) {
+		expect := string("")
+		got := hasNoSpecialCharacters(string("AB C"))
+		expectGotString(t, expect, got)
+	})
+
+	t.Run("with some special characters", func(t *testing.T) {
+		expect := string("")
+		got := hasNoSpecialCharacters(string("AB*C"))
+		expectGotString(t, expect, got)
+	})
+}

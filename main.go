@@ -5,6 +5,7 @@ import (
 	"os"
 	"sort"
 	"strings"
+	"unicode"
 )
 
 type wordFunc func(string) string
@@ -35,22 +36,13 @@ func applyToWordSlice(f wordFunc, words *[]string) *[]string {
 	return &newWords
 }
 
-func rmWordsWithNonAsciiChars(words *[]string) *[]string {
-	asciiWords := []string{}
-	for _, word := range *words {
-		skip := false
-		for _, letter := range word {
-			asciiValue := int(letter)
-			if asciiValue < 65 || asciiValue > 90 {
-				skip = true
-				break
-			}
-		}
-		if !skip {
-			asciiWords = append(asciiWords, word)
+func hasNoSpecialCharacters(word string) string {
+	for _, letter := range word {
+		if !unicode.IsLetter(letter) {
+			return ""
 		}
 	}
-	return &asciiWords
+	return word
 }
 
 func hasLength(word string, length int) string {
@@ -61,8 +53,8 @@ func hasLength(word string, length int) string {
 }
 
 func cleanupWords(words *[]string, length int) *[]string {
+	words = applyToWordSlice(hasNoSpecialCharacters, words)
 	words = applyToWordSlice(strings.ToUpper, words)
-	words = rmWordsWithNonAsciiChars(words)
 	hasLengthLength := func(word string) string {
 		return hasLength(word, length)
 	}

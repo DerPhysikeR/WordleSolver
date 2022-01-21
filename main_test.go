@@ -101,3 +101,48 @@ func TestCreateWordGameFromWords(t *testing.T) {
 	})
 
 }
+
+func assertPanic(t *testing.T, f func()) {
+	defer func() {
+		if r := recover(); r == nil {
+			t.Errorf("The code did not panic")
+		}
+	}()
+	f()
+}
+
+func TestScoreAgainst(t *testing.T) {
+	t.Run("with invalid words", func(t *testing.T) {
+		defer func() {
+			if r := recover(); r == nil {
+				t.Errorf("The code did not panic")
+			}
+		}()
+		scoreAgainst("abc", "abcd")
+	})
+
+	t.Run("with identical words", func(t *testing.T) {
+		score := scoreAgainst("abc", "abc")
+		expectGotString(t, "HHH", score)
+	})
+
+	t.Run("with completely different words", func(t *testing.T) {
+		score := scoreAgainst("abc", "xyz")
+		expectGotString(t, "...", score)
+	})
+
+	t.Run("with intersecting words", func(t *testing.T) {
+		score := scoreAgainst("abc", "cde")
+		expectGotString(t, "..h", score)
+	})
+
+	t.Run("with similar", func(t *testing.T) {
+		score := scoreAgainst("abc", "cbe")
+		expectGotString(t, ".Hh", score)
+	})
+
+	t.Run("with repeating letter", func(t *testing.T) {
+		score := scoreAgainst("aae", "bca")
+		expectGotString(t, "hh.", score)
+	})
+}

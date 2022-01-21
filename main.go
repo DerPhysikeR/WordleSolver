@@ -159,7 +159,7 @@ func main() {
 	var score string
 	fmt.Printf("Calculate best guesses from given word list ...\n")
 	for len(*wg.remainingWords) > 1 {
-		fmt.Printf("Best guesses: %v\n", (*wg.getBestGuesses())[:10])
+		fmt.Printf("Best guesses: %v\n", (*wg.getBestGuesses())[:12])
 
         guess = ""
         for len(guess) != length {

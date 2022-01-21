@@ -7,6 +7,8 @@ import (
 	"strings"
 )
 
+type wordFunc func(string) string
+
 type WordGame struct {
 	allWords       *[]string
 	remainingWords *[]string
@@ -21,12 +23,16 @@ func readDictionary(path string) *[]string {
 	return &words
 }
 
-func toUpper(words *[]string) *[]string {
-	uppercaseWords := []string{}
+func applyToWordSlice(f wordFunc, words *[]string) *[]string {
+	newWords := []string{}
 	for _, word := range *words {
-		uppercaseWords = append(uppercaseWords, strings.ToUpper(word))
+		w := f(word)
+		if w == "" {
+			continue
+		}
+		newWords = append(newWords, w)
 	}
-	return &uppercaseWords
+	return &newWords
 }
 
 func rmWordsWithNonAsciiChars(words *[]string) *[]string {
@@ -59,7 +65,7 @@ func filterWordsByLength(words *[]string, length int) *[]string {
 }
 
 func cleanupWords(words *[]string, length int) *[]string {
-	words = toUpper(words)
+	words = applyToWordSlice(strings.ToUpper, words)
 	words = rmWordsWithNonAsciiChars(words)
 	words = filterWordsByLength(words, length)
 	return words

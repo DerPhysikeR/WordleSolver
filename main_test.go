@@ -80,3 +80,13 @@ func TestHasNoSpecialCharacters(t *testing.T) {
 		expectGotString(t, expect, got)
 	})
 }
+
+func TestCleanupWords(t *testing.T) {
+	t.Run("all kinds of words", func(t *testing.T) {
+		words := []string{"a,c", "a", "abc"}
+		cleanedWords := cleanupWords(&words, 3)
+		reference := []string{"ABC"}
+		compareWordSlices(t, cleanedWords, &reference)
+	})
+
+}

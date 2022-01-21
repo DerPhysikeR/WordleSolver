@@ -186,5 +186,9 @@ func main() {
 		}
 		wg.guess(guess, score)
 	}
-	fmt.Printf("The solution is: %v\n", (*wg.remainingWords)[0])
+    if len(*wg.remainingWords) == 1 {
+        fmt.Printf("The solution is: %v\n", (*wg.remainingWords)[0])
+    } else {
+        fmt.Println("No solution found :-(")
+    }
 }

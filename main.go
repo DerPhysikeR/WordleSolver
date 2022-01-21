@@ -54,11 +54,8 @@ func hasLength(word string, length int) string {
 
 func cleanupWords(words *[]string, length int) *[]string {
 	words = applyToWordSlice(hasNoSpecialCharacters, words)
+	words = applyToWordSlice(func(word string) string { return hasLength(word, length) }, words)
 	words = applyToWordSlice(strings.ToUpper, words)
-	hasLengthLength := func(word string) string {
-		return hasLength(word, length)
-	}
-	words = applyToWordSlice(hasLengthLength, words)
 	return words
 }
 

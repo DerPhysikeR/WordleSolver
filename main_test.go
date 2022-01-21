@@ -166,3 +166,13 @@ func TestGetKeysSortedByValue(t *testing.T) {
 		}
 	})
 }
+
+func TestWordGameGuess(t *testing.T) {
+	t.Run("are words really filtered", func(t *testing.T) {
+		words := []string{"ABC", "ACB", "EAD"}
+		wordGame := createWordGame(&words, 3)
+		wordGame.guess("AEF", "H..")
+		reference := []string{"ABC", "ACB"}
+		compareWordSlices(t, wordGame.remainingWords, &reference)
+	})
+}

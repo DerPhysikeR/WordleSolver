@@ -137,20 +137,51 @@ func (wg *WordGame) guess(guess, score string) {
 	wg.remainingWords = &newRemainingWords
 }
 
+func toUniqueScore(score string) string {
+	uniqueScore := []rune{}
+	for _, letter := range score {
+        if unicode.IsLower(letter){
+			uniqueScore = append(uniqueScore, 'h')
+		} else if unicode.IsUpper(letter) {
+			uniqueScore = append(uniqueScore, 'H')
+        } else {
+			uniqueScore = append(uniqueScore, '.')
+        }
+	}
+	return string(uniqueScore)
+}
+
 func main() {
-	wg := createWordGameFromDictionary("/usr/share/dict/cracklib-small", 5)
+	length := 5
+    dictionaryFile := "/usr/share/dict/cracklib-small"
+	wg := createWordGameFromDictionary(dictionaryFile, length)
 	var guess string
 	var score string
+	fmt.Printf("Calculate best guesses from given word list ...\n")
 	for len(*wg.remainingWords) > 1 {
 		fmt.Printf("Best guesses: %v\n", (*wg.getBestGuesses())[:10])
 
-		fmt.Printf("Your guess: ")
-		fmt.Scanln(&guess)
+        guess = ""
+        for len(guess) != length {
+            fmt.Printf("Your guess: ")
+            fmt.Scanln(&guess)
+            if len(guess) != length {
+                fmt.Printf("Invalid length guess '%v'\n", guess)
+            }
+            guess = strings.ToUpper(guess)
+        }
 
-		fmt.Printf("score: ")
-		fmt.Scanln(&score)
+        score = ""
+        for len(score) != length {
+            fmt.Printf("Score of the guess: ")
+            fmt.Scanln(&score)
+            if len(score) != length {
+                fmt.Printf("Invalid length score '%v'\n", score)
+            }
+            score = toUniqueScore(score)
+        }
 
-		if score == "HHHHH" {
+		if score == strings.Repeat("H", length) {
 			os.Exit(0)
 		}
 		wg.guess(guess, score)

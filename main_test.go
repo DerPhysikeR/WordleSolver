@@ -185,3 +185,35 @@ func TestWordGameGetBestGuesses(t *testing.T) {
 		expectGotString(t, "XXX", worst)
 	})
 }
+
+func TestToUniqueScore(t *testing.T) {
+	t.Run("with only dots", func(t *testing.T) {
+		got := toUniqueScore("...")
+		expect := "..."
+		expectGotString(t, expect, got)
+	})
+
+	t.Run("with only lowercase letters", func(t *testing.T) {
+		got := toUniqueScore("abc")
+		expect := "hhh"
+		expectGotString(t, expect, got)
+	})
+
+	t.Run("with only uppercase letters", func(t *testing.T) {
+		got := toUniqueScore("ABC")
+		expect := "HHH"
+		expectGotString(t, expect, got)
+	})
+
+	t.Run("with mixture of all", func(t *testing.T) {
+		got := toUniqueScore(".aB")
+		expect := ".hH"
+		expectGotString(t, expect, got)
+	})
+
+	t.Run("with different special character", func(t *testing.T) {
+		got := toUniqueScore("*aB")
+		expect := ".hH"
+		expectGotString(t, expect, got)
+	})
+}

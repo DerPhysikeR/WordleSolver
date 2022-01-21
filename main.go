@@ -109,7 +109,6 @@ func getKeysSortedByValue(toSort *map[string]int) *[]string {
 }
 
 func (wg *WordGame) getBestGuesses() *[]string {
-	fmt.Println("start getting best guess")
 	wordScores := map[string]int{}
 	for _, word := range *wg.allWords {
 		scores := map[string]int{}
@@ -125,7 +124,6 @@ func (wg *WordGame) getBestGuesses() *[]string {
 		}
 		wordScores[word] = maxCount
 	}
-	fmt.Println("before sorting stuff")
 	return getKeysSortedByValue(&wordScores)
 }
 

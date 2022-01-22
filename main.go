@@ -71,6 +71,12 @@ func createWordGame(words *[]string, length int) *WordGame {
 	return &WordGame{words, &remainingWords}
 }
 
+func createWordGameFromWordLists(allWords *[]string, remainingWords *[]string) *WordGame {
+	allWords = applyToWordSlice(strings.ToUpper, allWords)
+	remainingWords = applyToWordSlice(strings.ToUpper, remainingWords)
+	return &WordGame{allWords, remainingWords}
+}
+
 func scoreAgainst(guess, solution string) string {
 	if len(guess) != len(solution) {
 		panic(fmt.Errorf("Can't score guess '%v' against '%v' with different length", guess, solution))
@@ -154,11 +160,10 @@ func toUniqueScore(score string) string {
 
 func main() {
 	length := 5
-	dictionaryFile := "/usr/share/dict/cracklib-small"
-	wg := createWordGameFromDictionary(dictionaryFile, length)
+	wg := createWordGameFromWordLists(&allWords, &possibleSolutions)
 	var guess string
 	var score string
-	fmt.Printf("Calculate best guesses from given word list ...\n")
+	fmt.Printf("Calculate best guesses ...\n")
 	for len(*wg.remainingWords) > 1 {
 		fmt.Printf("Best guesses: %v\n", (*wg.getBestGuesses())[:12])
 

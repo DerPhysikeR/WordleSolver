@@ -197,4 +197,5 @@ func main() {
 	} else {
 		fmt.Println("No solution found :-(")
 	}
+    fmt.Scanln()
 }

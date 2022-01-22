@@ -140,20 +140,20 @@ func (wg *WordGame) guess(guess, score string) {
 func toUniqueScore(score string) string {
 	uniqueScore := []rune{}
 	for _, letter := range score {
-        if unicode.IsLower(letter){
+		if unicode.IsLower(letter) {
 			uniqueScore = append(uniqueScore, 'h')
 		} else if unicode.IsUpper(letter) {
 			uniqueScore = append(uniqueScore, 'H')
-        } else {
+		} else {
 			uniqueScore = append(uniqueScore, '.')
-        }
+		}
 	}
 	return string(uniqueScore)
 }
 
 func main() {
 	length := 5
-    dictionaryFile := "/usr/share/dict/cracklib-small"
+	dictionaryFile := "/usr/share/dict/cracklib-small"
 	wg := createWordGameFromDictionary(dictionaryFile, length)
 	var guess string
 	var score string
@@ -161,34 +161,34 @@ func main() {
 	for len(*wg.remainingWords) > 1 {
 		fmt.Printf("Best guesses: %v\n", (*wg.getBestGuesses())[:12])
 
-        guess = ""
-        for len(guess) != length {
-            fmt.Printf("Your guess: ")
-            fmt.Scanln(&guess)
-            if len(guess) != length {
-                fmt.Printf("Invalid length guess '%v'\n", guess)
-            }
-            guess = strings.ToUpper(guess)
-        }
+		guess = ""
+		for len(guess) != length {
+			fmt.Printf("Your guess: ")
+			fmt.Scanln(&guess)
+			if len(guess) != length {
+				fmt.Printf("Invalid length guess '%v'\n", guess)
+			}
+			guess = strings.ToUpper(guess)
+		}
 
-        score = ""
-        for len(score) != length {
-            fmt.Printf("Score of the guess: ")
-            fmt.Scanln(&score)
-            if len(score) != length {
-                fmt.Printf("Invalid length score '%v'\n", score)
-            }
-            score = toUniqueScore(score)
-        }
+		score = ""
+		for len(score) != length {
+			fmt.Printf("Score of the guess: ")
+			fmt.Scanln(&score)
+			if len(score) != length {
+				fmt.Printf("Invalid length score '%v'\n", score)
+			}
+			score = toUniqueScore(score)
+		}
 
 		if score == strings.Repeat("H", length) {
 			os.Exit(0)
 		}
 		wg.guess(guess, score)
 	}
-    if len(*wg.remainingWords) == 1 {
-        fmt.Printf("The solution is: %v\n", (*wg.remainingWords)[0])
-    } else {
-        fmt.Println("No solution found :-(")
-    }
+	if len(*wg.remainingWords) == 1 {
+		fmt.Printf("The solution is: %v\n", (*wg.remainingWords)[0])
+	} else {
+		fmt.Println("No solution found :-(")
+	}
 }

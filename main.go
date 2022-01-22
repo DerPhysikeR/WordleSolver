@@ -101,6 +101,7 @@ func getKeysSortedByValue(toSort *map[string]int) *[]string {
 	result := []string{}
 	sort.Ints(keys)
 	for _, key := range keys {
+		sort.Strings(inverseMap[key])
 		for _, word := range inverseMap[key] {
 			result = append(result, word)
 		}

@@ -2,7 +2,7 @@
 
 This is a solver for the popular word game [Wordle](https://www.powerlanguage.co.uk/wordle/).
 
-## how to use
+## How to use the solver
 
 Download the executable for your platform and run it by double clicking it.
 This is a command line application, so a CLI should automatically open.
@@ -25,7 +25,7 @@ Your guess:
 
 Now choose one of the guesses, and type it into wordle.
 Wordle then gives you a score for your guess (green = [H]it, yellow = [h]it, grey = [.]).
-Now type input the guess and the score your guess received into the solver.
+Now input the guess and the score of your guess into the solver.
 
 ```
 Calculate best guesses from given word list ...
@@ -57,7 +57,7 @@ Either one of those guesses is already the solution or the solver shows you the 
 possible remaining word at the end.
 
 
-## how it works
+## How it works
 
 It is basically a simplified version of
 [Minimax](https://en.wikipedia.org/wiki/Minimax).
